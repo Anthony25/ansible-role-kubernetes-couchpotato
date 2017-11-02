@@ -45,7 +45,8 @@ spec:
 
 {% endfor %}
 {% if kubernetes_couchpotato_node_selector|default({}) %}
-      nodeSelector: {{ kubernetes_couchpotato_node_selector | to_yaml | indent(10) }}
+      nodeSelector:
+        {{ kubernetes_couchpotato_node_selector | to_yaml | indent(8) }}
 {% endif %}
       volumes:
       - {name: couchpotato-config, {{ kubernetes_couchpotato_config_volume.definition | to_yaml }}}
