@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ kubernetes_couchpotato_ingress.name }}
+{% if kubernetes_couchpotato_ingress.annotations %}
+  annotations:
+    {{ kubernetes_couchpotato_ingress.annotations | to_nice_yaml | indent }}
+{% endif %}
+spec:
+{% if kubernetes_couchpotato_ingress.tls %}
+  tls:
+    {{ kubernetes_couchpotato_ingress.tls | to_nice_yaml | indent }}
+{% endif %}
+  rules:
+  - host: {{ kubernetes_couchpotato_ingress.host }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ kubernetes_couchpotato_service }}
+          servicePort: 80

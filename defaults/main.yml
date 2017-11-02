@@ -1,0 +1,34 @@
+---
+
+kubernetes_couchpotato_image: "linuxserver/couchpotato:latest"
+
+kubernetes_couchpotato_namespace: "default"
+kubernetes_couchpotato_deployment: "couchpotato-deployment"
+kubernetes_couchpotato_app: "couchpotato"
+kubernetes_couchpotato_service: "couchpotato"
+
+kubernetes_couchpotato_node_selector: {}
+kubernetes_couchpotato_replicas: 1
+kubernetes_couchpotato_revision_history: 1
+
+kubernetes_couchpotato_resources:
+  limits:
+    memory: "1Gi"
+  requests:
+    memory: "256Mi"
+
+kubernetes_couchpotato_downloads_volumes: {}
+kubernetes_couchpotato_movies_volumes: {}
+kubernetes_couchpotato_watchdirs_volumes: {}
+
+kubernetes_couchpotato_config_volume:
+  definition:
+
+kubernetes_couchpotato_setup_ingress: false
+kubernetes_couchpotato_ingress:
+  name: "couchpotato-ingress"
+  host: "couchpotato.example.com"
+  annotations:
+  tls:
+
+# vim: set ts=2 sw=2:

@@ -1,0 +1,62 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ kubernetes_couchpotato_deployment }}
+  labels:
+    app: {{ kubernetes_couchpotato_app }}
+spec:
+  replicas: {{ kubernetes_couchpotato_replicas }}
+  revisionHistoryLimit: {{ kubernetes_couchpotato_revision_history }}
+  selector:
+    matchLabels:
+      app: {{ kubernetes_couchpotato_app }}
+  template:
+    metadata:
+      labels:
+        app: {{ kubernetes_couchpotato_app }}
+    spec:
+      containers:
+      - image: {{ kubernetes_couchpotato_image }}
+        imagePullPolicy: Always
+        name: couchpotato
+        resources:
+          {{ kubernetes_couchpotato_resources | to_yaml | indent(10) }}
+        volumeMounts:
+        - mountPath: /config
+          name: couchpotato-config
+          {% if kubernetes_couchpotato_config_volume.subPath is defined %}subPath: {{ kubernetes_couchpotato_config_volume.subPath }}{% endif %}
+
+{% for k, v in kubernetes_couchpotato_downloads_volumes.items() %}
+        - mountPath: /downloads/{{ k }}
+          name: couchpotato-downloads-{{ k }}
+          {% if v.subPath is defined %}subPath: {{ v.subPath }}{% endif %}
+
+{% endfor %}
+{% for k, v in kubernetes_couchpotato_movies_volumes.items() %}
+        - mountPath: /movies/{{ k }}
+          name: couchpotato-movies-{{ k }}
+          {% if v.subPath is defined %}subPath: {{ v.subPath }}{% endif %}
+
+{% endfor %}
+{% for k, v in kubernetes_couchpotato_watchdirs_volumes.items() %}
+        - mountPath: /watchdirs/{{ k }}
+          name: couchpotato-watchdirs-{{ k }}
+          {% if v.subPath is defined %}subPath: {{ v.subPath }}{% endif %}
+
+{% endfor %}
+{% if kubernetes_couchpotato_node_selector|default({}) %}
+      nodeSelector: {{ kubernetes_couchpotato_node_selector | to_yaml | indent(10) }}
+{% endif %}
+      volumes:
+      - {name: couchpotato-config, {{ kubernetes_couchpotato_config_volume.definition | to_yaml }}}
+{% for k, v in kubernetes_couchpotato_downloads_volumes.items() %}
+      - {name: couchpotato-downloads-{{ k }}, {{ v.definition | to_yaml }}}
+{% endfor %}
+{% for k, v in kubernetes_couchpotato_movies_volumes.items() %}
+      - {name: couchpotato-movies-{{ k }}, {{ v.definition | to_yaml }}}
+{% endfor %}
+{% for k, v in kubernetes_couchpotato_watchdirs_volumes.items() %}
+      - {name: couchpotato-watchdirs-{{ k }}, {{ v.definition | to_yaml }}}
+{% endfor %}
+      restartPolicy: Always
+status: {}
