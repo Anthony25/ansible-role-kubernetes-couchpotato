@@ -11,6 +11,9 @@ kubernetes_couchpotato_node_selector: {}
 kubernetes_couchpotato_replicas: 1
 kubernetes_couchpotato_revision_history: 1
 
+kubernetes_couchpotato_deployment_labels: {}
+kubernetes_couchpotato_deployment_annotations: {}
+
 kubernetes_couchpotato_resources:
   limits:
     memory: "1Gi"
