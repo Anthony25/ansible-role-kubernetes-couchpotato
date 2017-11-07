@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: {{ kubernetes_couchpotato_service }}
+  namespace: {{ kubernetes_couchpotato_namespace }}
 spec:
   selector:
     app: {{ kubernetes_couchpotato_app }}

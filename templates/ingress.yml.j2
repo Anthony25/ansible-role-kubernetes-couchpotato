@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ kubernetes_couchpotato_ingress.name }}
+  namespace: {{ kubernetes_couchpotato_namespace }}
 {% if kubernetes_couchpotato_ingress.annotations %}
   annotations:
     {{ kubernetes_couchpotato_ingress.annotations | to_nice_yaml | indent }}
