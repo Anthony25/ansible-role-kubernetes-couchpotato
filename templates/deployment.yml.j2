@@ -29,6 +29,21 @@ spec:
         name: couchpotato
         resources:
           {{ kubernetes_couchpotato_resources | to_yaml | indent(10) }}
+        ports:
+        - name: couchpotato
+          containerPort: 5050
+        readinessProbe:
+          httpGet:
+            path: /
+            port: couchpotato
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /
+            port: couchpotato
+          initialDelaySeconds: 30
+          periodSeconds: 10
         volumeMounts:
         - mountPath: /config
           name: couchpotato-config
