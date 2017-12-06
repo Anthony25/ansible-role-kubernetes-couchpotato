@@ -16,7 +16,7 @@ kubernetes_couchpotato_deployment_annotations: {}
 
 kubernetes_couchpotato_resources:
   limits:
-    memory: "1Gi"
+    memory: "756Mi"
   requests:
     memory: "256Mi"
 
