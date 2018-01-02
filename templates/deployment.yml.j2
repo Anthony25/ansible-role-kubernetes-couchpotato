@@ -33,14 +33,12 @@ spec:
         - name: couchpotato
           containerPort: 5050
         readinessProbe:
-          httpGet:
-            path: /
+          tcpSocket:
             port: couchpotato
           initialDelaySeconds: 10
           periodSeconds: 5
-        livenessProbe:
-          httpGet:
-            path: /
+        readinessProbe:
+          tcpSocket:
             port: couchpotato
           initialDelaySeconds: 60
           periodSeconds: 10
