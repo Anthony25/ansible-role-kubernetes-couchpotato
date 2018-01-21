@@ -32,11 +32,6 @@ spec:
         ports:
         - name: couchpotato
           containerPort: 5050
-        readinessProbe:
-          tcpSocket:
-            port: couchpotato
-          initialDelaySeconds: 10
-          periodSeconds: 5
         livenessProbe:
           tcpSocket:
             port: couchpotato
